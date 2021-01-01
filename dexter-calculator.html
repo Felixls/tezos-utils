@@ -1,0 +1,60 @@
+<script type="text/javascript">
+  RED.nodes.registerType('dexter-calculator', {
+    category: 'tezos',
+    color: '#F4F17F',
+    defaults: {
+      operation: { value: 'xtzToTokenTokenOutput', required: true },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'calculator.svg',
+    label: function () {
+      return this.operation;
+    },
+    paletteLabel: 'dexter calculator',
+  });
+</script>
+
+<script type="text/html" data-template-name="dexter-calculator">
+  <div class="form-row">
+    <label for="node-input-operation"
+      ><i class="fa fa-calculator"></i> Operation
+    </label>
+    <select name="node-input-operation" id="node-input-operation">
+      <option value="xtzToTokenTokenOutput">xtzToTokenTokenOutput</option>
+      <option value="xtzToTokenXtzInput">xtzToTokenXtzInput</option>
+      <option value="xtzToTokenExchangeRate">xtzToTokenExchangeRate</option>
+      <option value="xtzToTokenMarketRate">xtzToTokenMarketRate</option>
+      <option value="xtzToTokenSlippage">xtzToTokenSlippage</option>
+      <option value="xtzToTokenMinimumTokenOutput">
+        xtzToTokenMinimumTokenOutput
+      </option>
+      <option value="totalLiquidityProviderFee">
+        totalLiquidityProviderFee
+      </option>
+      <option value="liquidityProviderFee">liquidityProviderFee</option>
+      <option value="tokenToXtzXtzOutput">tokenToXtzXtzOutput</option>
+      <option value="tokenToXtzTokenInput">tokenToXtzTokenInput</option>
+      <option value="tokenToXtzExchangeRate">tokenToXtzExchangeRate</option>
+      <option value="tokenToXtzMarketRate">tokenToXtzMarketRate</option>
+      <option value="tokenToXtzSlippage">tokenToXtzSlippage</option>
+      <option value="tokenToXtzMinimumXtzOutput">
+        tokenToXtzMinimumXtzOutput
+      </option>
+      <option value="addLiquidityLiquidityCreated">
+        addLiquidityLiquidityCreated
+      </option>
+      <option value="addLiquidityTokenIn">addLiquidityTokenIn</option>
+      <option value="addLiquidityXtzIn">addLiquidityXtzIn</option>
+      <option value="removeLiquidityTokenOut">removeLiquidityTokenOut</option>
+      <option value="removeLiquidityXtzOut">removeLiquidityXtzOut</option>
+    </select>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="dexter-calculator">
+  <p>
+    Performs a number of important calculations related to the Tezos Dexter
+    contract's entrypoints.
+  </p>
+</script>

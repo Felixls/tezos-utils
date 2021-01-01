@@ -1,0 +1,53 @@
+<script type="text/javascript">
+  RED.nodes.registerType('dexter', {
+    category: 'tezos',
+    color: '#75A9F6',
+    defaults: {
+      rpc: { value: '', type: 'connection', required: true },
+      wallet: { value: '', type: 'wallet', required: true },
+      operation: { value: 'getPool', required: true },
+      token: { value: 'usdTZ', required: true },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'dexter-logo.svg',
+    label: function () {
+      return this.token + ': ' + this.operation;
+    },
+    paletteLabel: 'dexter',
+  });
+</script>
+
+<script type="text/html" data-template-name="dexter">
+  <div class="form-row">
+    <label for="node-input-wallet"><i class="fa fa-key"></i> Wallet</label>
+    <input type="text" id="node-input-wallet" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-rpc"><i class="fa fa-globe"></i> RPC</label>
+    <input type="text" id="node-input-rpc" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-operation"
+      ><i class="fa fa-gear"></i> Operation
+    </label>
+    <select name="node-input-operation" id="node-input-operation">
+      <option value="getPool">Get pool</option>
+      <option value="getBalance">Get balance</option>
+      <option value="xtzToToken">xtzToToken</option>
+      <option value="tokenToXtz">tokenToXtz</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-token"><i class="fa fa-gear"></i> Asset </label>
+    <select name="node-input-token" id="node-input-token">
+      <option value="usdTZ">usdTZ</option>
+      <option value="tzBTC">tzBTC</option>
+      <option value="XTZ">XTZ</option>
+    </select>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="dexter">
+  <p>Tezos Dexter trading node.</p>
+</script>

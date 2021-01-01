@@ -1,0 +1,29 @@
+<script type="text/javascript">
+  RED.nodes.registerType('connection', {
+    category: 'config',
+    defaults: {
+      name: { value: '' },
+      rpc: { value: 'https://mainnet-tezos.giganode.io', required: true },
+    },
+    label: function () {
+      return this.name || 'Tezos node';
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="connection">
+  <div class="form-row">
+    <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-config-input-name" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-rpc"
+      ><i class="fa fa-globe"></i> Node URL</label
+    >
+    <input type="text" id="node-config-input-rpc" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="connection">
+  <p>Tezos Node.</p>
+</script>

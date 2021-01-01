@@ -1,0 +1,43 @@
+<script type="text/javascript">
+  RED.nodes.registerType('harbinger', {
+    category: 'tezos',
+    color: '#F4F17F',
+    defaults: {
+      rpc: { value: '', type: 'connection', required: true },
+      pair: { value: 'XTZ-USD', required: true },
+    },
+    inputs: 1,
+    outputs: 1,
+    icon: 'harbinger.svg',
+    label: function () {
+      return this.pair + ' price';
+    },
+    paletteLabel: 'harbinger',
+  });
+</script>
+
+<script type="text/html" data-template-name="harbinger">
+  <div class="form-row">
+    <label for="node-input-rpc"><i class="fa fa-globe"></i> RPC</label>
+    <input type="text" id="node-input-rpc" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-pair"><i class="fa fa-gear"></i> Token pair </label>
+    <select name="node-input-pair" id="node-input-pair">
+      <option value="BTC-USD">BTC-USD</option>
+      <option value="BAT-USDC">BAT-USDC</option>
+      <option value="COMP-USD">COMP-USD</option>
+      <option value="DAI-USDC">DAI-USDC</option>
+      <option value="ETH-USD">ETH-USD</option>
+      <option value="KNC-USD">KNC-USD</option>
+      <option value="LINK-USD">LINK-USD</option>
+      <option value="REP-USD">REP-USD</option>
+      <option value="XTZ-USD">XTZ-USD</option>
+      <option value="ZRX-USD">ZRX-USD</option>
+    </select>
+  </div>
+</script>
+
+<script type="text/html" data-help-name="harbinger">
+  <p>Harbinger price oracle utils.</p>
+</script>
