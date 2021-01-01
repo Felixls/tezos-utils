@@ -4,14 +4,6 @@ This project brings an easy to use graphical interface to interact with Dexter s
 
 It could be useful as a starting point to build arbitrage bots, multiple steps workflows that interact with Tezos blockchain, etc.
 
-# Project structure
-
-```
-.
-|── dexter/       # Dexter & Tezos utilities
-└── tezos-utils/  # Tezos Node-red nodes
-```
-
 # Prerequisites
 
 - Installed NodeJS (tested with NodeJS v14+)
@@ -24,33 +16,19 @@ It could be useful as a starting point to build arbitrage bots, multiple steps w
 
 check other options (it can run in a docker container for example), [here](https://nodered.org/docs/getting-started/)
 
-# Building node-red nodes
-
-Download this repo and execute:
-
-`cd dexter`
-
-`npm install`
-
-`npm run build`
-
-`cd ../dexter-utils`
-
-`npm install`
-
 # Adding Dexter nodes to node-red:
 
 Go to the node-red data directory e.g: ~/.node-red and run:
 
 `cd ~/.node-red`
 
-`npm install {path to tezos-utils directory}`
+`npm install --save node-red-contrib-tezos-utils`
 
-`node-red`
+Then restart node-red.
 
 # Usage
 
-[Youtube video]()
+[Youtube video]() - Comming soon.
 
 # Security
 
