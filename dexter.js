@@ -26,6 +26,8 @@ module.exports = function (RED) {
       const token = require('dexterlib/dist/token');
       const bignumber = require('bignumber.js');
 
+      const network = token.Network[this.tezosNode.network];
+
       const minimumTokenOutput = bignumber.BigNumber(
         msg.payload.minimumTokenOutput
       );
@@ -36,11 +38,11 @@ module.exports = function (RED) {
       const amount = msg.payload.amount;
 
       const tezos = new taquito.TezosToolkit(node.tezosNode.rpc);
-      const kUSD = new token.KUSD(tezos, sk);
-      const usdTZ = new token.UsdTZ(tezos, sk);
-      const ETHtz = new token.ETHtz(tezos, sk);
-      const tzBTC = new token.TzBTC(tezos, sk);
-      const XTZ = new token.XTZ(tezos);
+      const kUSD = new token.KUSD(tezos, sk, network);
+      const usdTZ = new token.UsdTZ(tezos, sk, network);
+      const ETHtz = new token.ETHtz(tezos, sk, network);
+      const tzBTC = new token.TzBTC(tezos, sk, network);
+      const XTZ = new token.XTZ(tezos, network);
 
       try {
         switch (node.operation) {
@@ -132,6 +134,13 @@ module.exports = function (RED) {
                 break;
               case 'tzBTC':
                 msg.payload.opHash = await tzBTC.toXTZ(
+                  address,
+                  minimumXtzOutput.toNumber(),
+                  amount
+                );
+                break;
+              case 'ETHtz':
+                msg.payload.opHash = await ETHtz.toXTZ(
                   address,
                   minimumXtzOutput.toNumber(),
                   amount

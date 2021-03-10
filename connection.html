@@ -4,6 +4,7 @@
     defaults: {
       name: { value: '' },
       rpc: { value: 'https://mainnet-tezos.giganode.io', required: true },
+      network: { value: 'mainnet', required: true },
     },
     label: function () {
       return this.name || 'Tezos node';
@@ -21,6 +22,15 @@
       ><i class="fa fa-globe"></i> Node URL</label
     >
     <input type="text" id="node-config-input-rpc" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-network"
+      ><i class="fa fa-network"></i> Network</label
+    >
+    <select name="node-config-input-network" id="node-config-input-network">
+      <option value="Mainnet">Mainnet</option>
+      <option value="Delphinet">Delphinet</option>
+    </select>
   </div>
 </script>
 
