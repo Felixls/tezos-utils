@@ -53,8 +53,8 @@ module.exports = function (RED) {
           );
           send(msg);
           break;
-        case 'xtzToTokenSlippage':
-          msg.payload.xtzToTokenSlippage = +dc.xtzToTokenSlippage(
+        case 'xtzToTokenPriceImpact':
+          msg.payload.xtzToTokenPriceImpact = +dc.xtzToTokenPriceImpact(
             msg.payload.xtzIn,
             msg.payload.xtzPool,
             msg.payload.tokenPool
@@ -103,8 +103,8 @@ module.exports = function (RED) {
           );
           send(msg);
           break;
-        case 'tokenToXtzSlippage':
-          msg.payload.tokenToXtzSlippage = +dc.tokenToXtzSlippage(
+        case 'tokenToXtzPriceImpact':
+          msg.payload.tokenToXtzPriceImpact = +dc.tokenToXtzPriceImpact(
             msg.payload.tokenIn,
             msg.payload.xtzPool,
             msg.payload.tokenPool

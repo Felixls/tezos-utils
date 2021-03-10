@@ -36,7 +36,9 @@ module.exports = function (RED) {
       const amount = msg.payload.amount;
 
       const tezos = new taquito.TezosToolkit(node.tezosNode.rpc);
+      const kUSD = new token.kUSD(tezos, sk);
       const usdTZ = new token.UsdTZ(tezos, sk);
+      const ETHtz = new token.ETHtz(tezos, sk);
       const tzBTC = new token.TzBTC(tezos, sk);
       const XTZ = new token.XTZ(tezos);
 
@@ -45,11 +47,17 @@ module.exports = function (RED) {
           case 'getPool':
             msg.payload.xtzPool = +(await usdTZ.getXTZPool());
             switch (node.token) {
-              case 'usdTZ':
+              case 'kUSD':
+                msg.payload.tokenPool = +(await kUSD.getTokenPool());
+                break;
+              case 'USDtz':
                 msg.payload.tokenPool = +(await usdTZ.getTokenPool());
                 break;
               case 'tzBTC':
                 msg.payload.tokenPool = +(await tzBTC.getTokenPool());
+                break;
+              case 'ETHtz':
+                msg.payload.tokenPool = +(await ETHtz.getTokenPool());
                 break;
               case 'XTZ':
                 break;
@@ -57,11 +65,17 @@ module.exports = function (RED) {
             break;
           case 'getBalance':
             switch (node.token) {
-              case 'usdTZ':
+              case 'kUSD':
+                msg.payload.tokenBalance = +(await kUSD.getBalance(address));
+                break;
+              case 'USDtz':
                 msg.payload.tokenBalance = +(await usdTZ.getBalance(address));
                 break;
               case 'tzBTC':
                 msg.payload.tokenBalance = +(await tzBTC.getBalance(address));
+                break;
+              case 'ETHtz':
+                msg.payload.tokenBalance = +(await ETHtz.getBalance(address));
                 break;
               case 'XTZ':
                 msg.payload.tokenBalance = +(await XTZ.getBalance(address));
@@ -70,7 +84,14 @@ module.exports = function (RED) {
             break;
           case 'xtzToToken':
             switch (node.token) {
-              case 'usdTZ':
+              case 'kUSD':
+                msg.payload.opHash = await kUSD.fromXTZ(
+                  address,
+                  minimumTokenOutput.toNumber(),
+                  amount
+                );
+                break;
+              case 'USDtz':
                 msg.payload.opHash = await usdTZ.fromXTZ(
                   address,
                   minimumTokenOutput.toNumber(),
@@ -84,11 +105,25 @@ module.exports = function (RED) {
                   amount
                 );
                 break;
+              case 'ETHtz':
+                msg.payload.opHash = await ETHtz.fromXTZ(
+                  address,
+                  minimumTokenOutput.toNumber(),
+                  amount
+                );
+                break;
             }
             break;
           case 'tokenToXtz':
             switch (node.token) {
-              case 'usdTZ':
+              case 'kUSD':
+                msg.payload.opHash = await kUSD.toXTZ(
+                  address,
+                  minimumXtzOutput.toNumber(),
+                  amount
+                );
+                break;
+              case 'USDtz':
                 msg.payload.opHash = await usdTZ.toXTZ(
                   address,
                   minimumXtzOutput.toNumber(),
