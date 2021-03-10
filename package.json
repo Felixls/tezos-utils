@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-tezos-utils",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nodered nodes to interact with Tezos",
   "main": "index.js",
   "scripts": {

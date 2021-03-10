@@ -36,7 +36,7 @@ module.exports = function (RED) {
       const amount = msg.payload.amount;
 
       const tezos = new taquito.TezosToolkit(node.tezosNode.rpc);
-      const kUSD = new token.kUSD(tezos, sk);
+      const kUSD = new token.KUSD(tezos, sk);
       const usdTZ = new token.UsdTZ(tezos, sk);
       const ETHtz = new token.ETHtz(tezos, sk);
       const tzBTC = new token.TzBTC(tezos, sk);
