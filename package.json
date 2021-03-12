@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-tezos-utils",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Nodered nodes to interact with Tezos",
   "main": "index.js",
   "scripts": {
@@ -20,11 +20,13 @@
       "dexter": "dexter.js",
       "wallet": "wallet.js",
       "connection": "connection.js",
-      "harbinger": "harbinger.js"
+      "harbinger": "harbinger.js",
+      "kolibri": "kolibri.js"
     }
   },
   "dependencies": {
     "@hover-labs/kolibri-js": "^1.2.5",
+    "@taquito/signer": "^8.0.6-beta.0",
     "@taquito/taquito": "^8.0.6-beta.0",
     "bignumber": "^1.1.0",
     "dexter-calculations": "1.2.0",
