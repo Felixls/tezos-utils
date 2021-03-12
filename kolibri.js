@@ -25,45 +25,49 @@ module.exports = function (RED) {
       const taquitoSigner = require('@taquito/signer');
       const bignumber = require('bignumber.js');
       const taquito = require('@taquito/taquito');
-
-      const network = kolibri.Network[this.tezosNode.network.toLowerCase()];
-
-      const signer = await taquitoSigner.InMemorySigner.fromSecretKey(sk);
-
-      const tezos = new taquito.TezosToolkit(node.tezosNode.rpc);
-      tezos.setSignerProvider(signer);
-      const ovenContract = await tezos.wallet.at(node.ovenAddress);
-
-      const harbingerClient = new kolibri.HarbingerClient(
-        node.tezosNode.rpc,
-        network === kolibri.Network.Mainnet
-          ? kolibri.CONTRACTS.MAIN.HARBINGER_NORMALIZER
-          : kolibri.CONTRACTS.DELPHI.HARBINGER_NORMALIZER
-      );
-
-      const stableCoinClient = new kolibri.StableCoinClient(
-        node.tezosNode.rpc,
-        network,
-        network === kolibri.Network.Mainnet
-          ? kolibri.CONTRACTS.MAIN.OVEN_REGISTRY
-          : kolibri.CONTRACTS.DELPHI.OVEN_REGISTRY,
-        network === kolibri.Network.Mainnet
-          ? kolibri.CONTRACTS.MAIN.MINTER
-          : kolibri.CONTRACTS.DELPHI.MINTER,
-        network === kolibri.Network.Mainnet
-          ? kolibri.CONTRACTS.MAIN.OVEN_FACTORY
-          : kolibri.CONTRACTS.DELPHI.OVEN_FACTORY
-      );
-
-      const ovenClient = new kolibri.OvenClient(
-        node.tezosNode.rpc,
-        signer,
-        node.ovenAddress,
-        stableCoinClient,
-        harbingerClient
-      );
+      const token = require('dexterlib/dist/token');
 
       try {
+        const network =
+          this.tezosNode.network.toLowerCase() === token.Network.Mainnet
+            ? kolibri.Network.Mainnet
+            : kolibri.Network.Delphi;
+
+        const signer = await taquitoSigner.InMemorySigner.fromSecretKey(sk);
+
+        const tezos = new taquito.TezosToolkit(node.tezosNode.rpc);
+        tezos.setSignerProvider(signer);
+        const ovenContract = await tezos.wallet.at(node.ovenAddress);
+
+        const harbingerClient = new kolibri.HarbingerClient(
+          node.tezosNode.rpc,
+          network === kolibri.Network.Mainnet
+            ? kolibri.CONTRACTS.MAIN.HARBINGER_NORMALIZER
+            : kolibri.CONTRACTS.DELPHI.HARBINGER_NORMALIZER
+        );
+
+        const stableCoinClient = new kolibri.StableCoinClient(
+          node.tezosNode.rpc,
+          network,
+          network === kolibri.Network.Mainnet
+            ? kolibri.CONTRACTS.MAIN.OVEN_REGISTRY
+            : kolibri.CONTRACTS.DELPHI.OVEN_REGISTRY,
+          network === kolibri.Network.Mainnet
+            ? kolibri.CONTRACTS.MAIN.MINTER
+            : kolibri.CONTRACTS.DELPHI.MINTER,
+          network === kolibri.Network.Mainnet
+            ? kolibri.CONTRACTS.MAIN.OVEN_FACTORY
+            : kolibri.CONTRACTS.DELPHI.OVEN_FACTORY
+        );
+
+        const ovenClient = new kolibri.OvenClient(
+          node.tezosNode.rpc,
+          signer,
+          node.ovenAddress,
+          stableCoinClient,
+          harbingerClient
+        );
+
         switch (node.operation) {
           case 'getCollateralizationRatio':
             msg.payload.collateralizationRatio = await ovenClient.getCollateralizationRatio();
@@ -108,7 +112,7 @@ module.exports = function (RED) {
             break;
           case 'repay':
             msg.payload.opHash = await ovenContract.methods
-              .withdraw(bignumber.BigNumber(msg.payload.tokens))
+              .repay(bignumber.BigNumber(msg.payload.tokens))
               .send({ amount: 0, mutez: true });
             break;
           default:

@@ -26,25 +26,25 @@ module.exports = function (RED) {
       const token = require('dexterlib/dist/token');
       const bignumber = require('bignumber.js');
 
-      const network = token.Network[this.tezosNode.network];
-
-      const minimumTokenOutput = bignumber.BigNumber(
-        msg.payload.minimumTokenOutput
-      );
-      const minimumXtzOutput = bignumber.BigNumber(
-        msg.payload.minimumXtzOutput
-      );
-
-      const amount = msg.payload.amount;
-
-      const tezos = new taquito.TezosToolkit(node.tezosNode.rpc);
-      const kUSD = new token.KUSD(tezos, sk, network);
-      const usdTZ = new token.UsdTZ(tezos, sk, network);
-      const ETHtz = new token.ETHtz(tezos, sk, network);
-      const tzBTC = new token.TzBTC(tezos, sk, network);
-      const XTZ = new token.XTZ(tezos, network);
-
       try {
+        const network = token.Network[this.tezosNode.network];
+
+        const minimumTokenOutput = bignumber.BigNumber(
+          msg.payload.minimumTokenOutput
+        );
+        const minimumXtzOutput = bignumber.BigNumber(
+          msg.payload.minimumXtzOutput
+        );
+
+        const amount = msg.payload.amount;
+
+        const tezos = new taquito.TezosToolkit(node.tezosNode.rpc);
+        const kUSD = new token.KUSD(tezos, sk, network);
+        const usdTZ = new token.UsdTZ(tezos, sk, network);
+        const ETHtz = new token.ETHtz(tezos, sk, network);
+        const tzBTC = new token.TzBTC(tezos, sk, network);
+        const XTZ = new token.XTZ(tezos, network);
+
         switch (node.operation) {
           case 'getPool':
             msg.payload.xtzPool = +(await usdTZ.getXTZPool());
